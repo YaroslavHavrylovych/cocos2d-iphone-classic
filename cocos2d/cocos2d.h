@@ -181,6 +181,11 @@
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
+//
+// Denshion
+//
+#import "CocosDenshion/SimpleAudioEngine.h"
+
 
 
 #ifdef __cplusplus
