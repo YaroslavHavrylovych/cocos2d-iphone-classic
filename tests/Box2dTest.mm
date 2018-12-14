@@ -246,26 +246,6 @@ enum {
 	}
 }
 
-- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{
-	static float prevX=0, prevY=0;
-
-//#define kFilterFactor 0.05f
-#define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
-
-	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
-	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
-
-	prevX = accelX;
-	prevY = accelY;
-
-	// accelerometer values are in "Portrait" mode. Change them to Landscape left
-	// multiply the gravity by 10
-	b2Vec2 gravity( -accelY * 10, accelX * 10);
-
-	world->SetGravity( gravity );
-}
-
 #elif defined(__CC_PLATFORM_MAC)
 -(BOOL) ccMouseUp:(NSEvent *)event
 {

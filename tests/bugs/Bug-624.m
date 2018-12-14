@@ -37,11 +37,6 @@
 	[[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:2 scene:scene withColor:ccWHITE]];
 }
 
-- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{
-	NSLog(@"Layer1 accel");
-}
-
 
 @end
 
@@ -72,11 +67,6 @@
 	[scene addChild:[Layer1 node] z:0];
 
 	[[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:2 scene:scene withColor:ccRED]];
-}
-
-- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{
-	NSLog(@"Layer2 accel");
 }
 @end
 

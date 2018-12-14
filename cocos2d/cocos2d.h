@@ -184,7 +184,7 @@
 //
 // Denshion
 //
-#import "CocosDenshion/SimpleAudioEngine.h"
+#import "SimpleAudioEngine.h"
 
 
 

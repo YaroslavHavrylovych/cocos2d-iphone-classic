@@ -822,6 +822,7 @@
 		E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
 		E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
 		E0F92AC41224559800EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
+		E7B5CA6221C3C292005EC366 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50305AF30E40E33200F63373 /* cocos2d.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2320,6 +2321,7 @@
 				A0407E9916A739AF00161E77 /* CDConfig.h in Headers */,
 				A0407E9A16A739AF00161E77 /* CDOpenALSupport.h in Headers */,
 				A0407E9C16A739AF00161E77 /* CDXMacOSXSupport.h in Headers */,
+				E7B5CA6221C3C292005EC366 /* cocos2d.h in Headers */,
 				A0407E9E16A739AF00161E77 /* CDXPropertyModifierAction.h in Headers */,
 				A0407EA016A739AF00161E77 /* CocosDenshion.h in Headers */,
 				A0407EA216A739AF00161E77 /* SimpleAudioEngine.h in Headers */,
@@ -3890,8 +3892,9 @@
 					external/kazmath/include,
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
+					CocosDenshion,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -3939,8 +3942,9 @@
 					external/kazmath/include,
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
+					CocosDenshion,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

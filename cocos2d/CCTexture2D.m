@@ -462,6 +462,8 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 {
 	// MUST have the same order declared on ccTypes
 	NSInteger linebreaks[] = {NSLineBreakByWordWrapping, NSLineBreakByCharWrapping, NSLineBreakByClipping, NSLineBreakByTruncatingHead, NSLineBreakByTruncatingTail, NSLineBreakByTruncatingMiddle};
+    // must follow the same order of CCTextureAligment
+    NSUInteger alignments[] = { NSTextAlignmentLeft, NSTextAlignmentCenter, NSTextAlignmentRight };
 
     
     
@@ -484,9 +486,9 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     if (definition.dimensions.width == 0 || definition.dimensions.height == 0)
     {
         CGSize boundingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
-        CGSize dim = [string sizeWithFont:uifont
-                 constrainedToSize:boundingSize
-                     lineBreakMode:NSLineBreakByWordWrapping];
+        NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        textStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        CGSize dim = [string boundingRectWithSize:boundingSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName : uifont, NSParagraphStyleAttributeName:textStyle} context:nil].size;
         
         if(dim.width == 0)
             dim.width = 1;
@@ -524,8 +526,8 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     
     if ( [definition shadowEnabled] )
     {
-        shadowStrokePaddingX = max(shadowStrokePaddingX, (float)abs([definition shadowOffset].width));
-        shadowStrokePaddingY = max(shadowStrokePaddingY, (float)abs([definition shadowOffset].height));
+        shadowStrokePaddingX = max(shadowStrokePaddingX, (float)fabs([definition shadowOffset].width));
+        shadowStrokePaddingY = max(shadowStrokePaddingY, (float)fabs([definition shadowOffset].height));
     }
     
     // add the padding (this could be 0 if no shadow and no stroke)
@@ -611,13 +613,20 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     
     CGRect drawArea;
     
+    NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    textStyle.lineBreakMode = linebreaks[definition.lineBreakMode];
+    textStyle.alignment = alignments[definition.alignment];
+    
+    NSDictionary *attrs = @{ NSFontAttributeName : uifont,
+                             NSParagraphStyleAttributeName:textStyle};
+    
     if(definition.vertAlignment == kCCVerticalTextAlignmentTop)
     {
         drawArea = CGRectMake(textOriginX, textOriginY, computedDimension.width, computedDimension.height);
     }
     else
     {
-        CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:computedDimension lineBreakMode:linebreaks[definition.lineBreakMode] ];
+        CGSize drawSize = [string boundingRectWithSize:computedDimension options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attrs context:nil].size;
         
         if(definition.vertAlignment == kCCVerticalTextAlignmentBottom)
         {
@@ -629,11 +638,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
         }
     }
     
-	// must follow the same order of CCTextureAligment
-	NSUInteger alignments[] = { NSTextAlignmentLeft, NSTextAlignmentCenter, NSTextAlignmentRight };
-	
-	[string drawInRect:drawArea withFont:uifont lineBreakMode:linebreaks[definition.lineBreakMode] alignment:alignments[definition.alignment]];
-    
+    [string drawInRect:drawArea withAttributes:attrs];
 
 	UIGraphicsPopContext();
 	
@@ -668,6 +673,8 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 	// MUST have the same order declared on ccTypes
 	NSInteger linebreaks[] = {NSLineBreakByWordWrapping, NSLineBreakByCharWrapping, NSLineBreakByClipping, NSLineBreakByTruncatingHead, NSLineBreakByTruncatingTail, NSLineBreakByTruncatingMiddle};
+    // must follow the same order of CCTextureAligment
+    NSUInteger alignments[] = { NSTextAlignmentLeft, NSTextAlignmentCenter, NSTextAlignmentRight };
 
 	NSUInteger textureWidth  = ccNextPOT(dimensions.width);
 	NSUInteger textureHeight = ccNextPOT(dimensions.height);
@@ -699,13 +706,20 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	UIGraphicsPushContext(context);
 
 	CGRect drawArea;
+    
+    NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    textStyle.lineBreakMode = linebreaks[lineBreakMode];
+    textStyle.alignment = alignments[hAlignment];
+    
+    NSDictionary *attrs = @{ NSFontAttributeName : uifont,
+                             NSParagraphStyleAttributeName:textStyle};
 	if(vAlignment == kCCVerticalTextAlignmentTop)
 	{
 		drawArea = CGRectMake(0, 0, dimensions.width, dimensions.height);
 	}
 	else
 	{
-		CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:linebreaks[lineBreakMode] ];
+		CGSize drawSize = [string boundingRectWithSize:dimensions options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attrs context:nil].size;
 		
 		if(vAlignment == kCCVerticalTextAlignmentBottom)
 		{
@@ -716,11 +730,8 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 			drawArea = CGRectMake(0, (dimensions.height - drawSize.height) / 2, dimensions.width, drawSize.height);
 		}
 	}
-
-	// must follow the same order of CCTextureAligment
-	NSUInteger alignments[] = { NSTextAlignmentLeft, NSTextAlignmentCenter, NSTextAlignmentRight };
 	
-	[string drawInRect:drawArea withFont:uifont lineBreakMode:linebreaks[lineBreakMode] alignment:alignments[hAlignment]];
+    [string drawInRect:drawArea withAttributes:attrs];
 
 	UIGraphicsPopContext();
 
@@ -1079,12 +1090,16 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 		[self release];
 		return nil;
 	}
+    
+    NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    textStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    NSDictionary *attrs = @{ NSFontAttributeName : font,
+                             NSParagraphStyleAttributeName:textStyle};
 
 	// Is it a multiline ? sizeWithFont: only works with single line.
 	CGSize boundingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
-	dim = [string sizeWithFont:font
-			 constrainedToSize:boundingSize
-				 lineBreakMode:NSLineBreakByWordWrapping];
+    dim = [string boundingRectWithSize:boundingSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attrs context:nil].size;
 	
 	if(dim.width == 0)
 		dim.width = 1;

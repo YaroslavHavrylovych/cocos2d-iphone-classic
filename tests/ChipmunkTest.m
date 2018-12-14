@@ -220,27 +220,6 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	}
 }
 
-- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{	
-	static float prevX=0, prevY=0;
-	
-#define kFilterFactor 0.05f
-	
-	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
-	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
-	
-	prevX = accelX;
-	prevY = accelY;
-	
-	cpVect v;
-	if( [[CCDirector sharedDirector] interfaceOrientation] == UIInterfaceOrientationLandscapeRight )
-		v = cpv( -accelY, accelX);
-	else
-		v = cpv( accelY, -accelX);
-	
-	cpSpaceSetGravity( _space, cpvmult(v, 200) );
-}
-
 #elif defined(__CC_PLATFORM_MAC)
 
 #pragma mark Mac Events

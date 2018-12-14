@@ -224,14 +224,4 @@ enum {
 	test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
 }
 
-
-- (void) accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{
-	// Only run for valid values
-	if (acceleration.y!=0 && acceleration.x!=0)
-	{
-		if (test) test->SetGravity((float)-acceleration.y,(float)acceleration.x);
-	}
-}
-
 @end
