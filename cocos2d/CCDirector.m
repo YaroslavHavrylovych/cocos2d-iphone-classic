@@ -413,7 +413,8 @@ static CCDirector *_sharedDirector = nil;
 	if( c == 0 )
 		[self end];
 	else {
-		_sendCleanupToScene = YES;
+        //TODO we need this for a new ios
+		//_sendCleanupToScene = YES;
 		_nextScene = [_scenesStack objectAtIndex:c-1];
 	}
 }
