@@ -15,7 +15,7 @@
   },
   "source_files": [
     "cocos2d/**/*.{h,m,mm,c}",
-    "CocosDenshion/*.{h,c}"
+    "CocosDenshion/*.{h,c}",
     "external/kazmath/src/**/*.{c,h}",
     "external/kazmath/include/**/*.{c,h}",
     "external/libpng/*.{h,c}"
