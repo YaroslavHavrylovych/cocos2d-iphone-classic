@@ -25,7 +25,8 @@
     "external/libpng/example.c"
   ],
   "xcconfig": {
-    "HEADER_SEARCH_PATHS": "\"${PODS_ROOT}/cocos2d/external/kazmath/include\""
+    "HEADER_SEARCH_PATHS": "\"${PODS_ROOT}/cocos2d/external/kazmath/include\"",
+    "HEADER_SEARCH_PATHS": "\"${PODS_ROOT}/cocos2d/CocosDenshion\""
   },
   "frameworks": [
     "OpenGLES",
@@ -44,6 +45,9 @@
     {
       "name": "CocosDenshion",
       "source_files": "CocosDenshion/*.{h,m}",
+      "xcconfig": {
+        "HEADER_SEARCH_PATHS": "\"${PODS_ROOT}/cocos2d/CocosDenshion\""
+      },
       "frameworks": [
         "OpenAL",
         "AVFoundation",
