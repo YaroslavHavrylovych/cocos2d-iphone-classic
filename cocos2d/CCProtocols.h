@@ -154,7 +154,7 @@
 @class UIAccelerometer;
 @protocol CCAccelerometerDelegate <NSObject>
 
-//@optional
-//- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration;
+@optional
+- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration;
 @end
 #endif // __CC_PLATFORM_IOS
