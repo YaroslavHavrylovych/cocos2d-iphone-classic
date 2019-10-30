@@ -32,6 +32,9 @@
     "GameKit",
     "CoreText"
   ],
+  "platforms": {
+    "ios": "9.0"
+  },
   "libraries": "z",
   "prefix_header_contents": "\n#define CC_ENABLE_GL_STATE_CACHE 1\n",
   "header_mappings_dir": "cocos2d",
