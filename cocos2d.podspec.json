@@ -15,6 +15,7 @@
   },
   "source_files": [
     "cocos2d/**/*.{h,m,mm,c}",
+    "CocosDenshion/*.{h,c}",
     "external/kazmath/src/**/*.{c,h}",
     "external/kazmath/include/**/*.{c,h}",
     "external/libpng/*.{h,c}"
@@ -32,6 +33,9 @@
     "GameKit",
     "CoreText"
   ],
+  "platforms": {
+    "ios": "9.0"
+  },
   "libraries": "z",
   "prefix_header_contents": "\n#define CC_ENABLE_GL_STATE_CACHE 1\n",
   "header_mappings_dir": "cocos2d",
@@ -40,6 +44,9 @@
     {
       "name": "CocosDenshion",
       "source_files": "CocosDenshion/*.{h,m}",
+      "xcconfig": {
+        "HEADER_SEARCH_PATHS": "\"${PODS_ROOT}/cocos2d/CocosDenshion\""
+      },
       "frameworks": [
         "OpenAL",
         "AVFoundation",
